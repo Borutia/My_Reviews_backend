@@ -1,10 +1,8 @@
-from django.urls import path
-from accounts import views
-#from django.contrib.auth import views
+from django.urls import path, re_path
+from accounts.views import Registration_API_View, Login_API_View
 
 urlpatterns = [
-    path(r'^sign_in/', views.sign_up),
-    path(r'^sign_up/', views.sign_in),
-    path(r'^my_account/', views.my_account),
+    re_path(r'^registration/$', Registration_API_View.as_view(), name='user_registration'),
+    re_path(r'^login/$', Login_API_View.as_view(), name='user_login'),
 ]
 

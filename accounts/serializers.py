@@ -1,26 +1,19 @@
+from accounts.models import User
 from rest_framework import serializers
 
-class User_serializer(serializers.ModelSerializer):
-    username = serializers.CharField(
-        max_length=128
-    )
-    email = serializers.EmailField(
-        required=True,
-        # validators=[UniqueValidator(queryset=User.objects.all())]
-    )
-    password = serializers.CharField(
-        min_length=6
-    )
-    created = serializers.DateTimeField(
-        auto_now_add=True,
-        auto_now=False
-    )
-    updated = serializers.DateTimeField(
-        auto_now_add=False,
-        auto_now=True
-    )
 
-    class Meta:
+class Registration_serializer(serializers.ModelSerializer):
+    class Meta(object):
         model = User
-        fields = ('id', 'username', 'email', 'password')
-        read_only_fields = ('id',)
+        fields = ('id', 'email', 'username', 'password', 'date_joined')
+        extra_kwargs = {
+            'password': {
+                'write_only': True
+            }
+        }
+
+
+class Login_serializer(serializers.ModelSerializer):
+    class Meta(object):
+        model = User
+        fields = ('email', 'password')
